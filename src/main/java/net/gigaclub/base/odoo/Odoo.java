@@ -53,6 +53,38 @@ public class Odoo {
         }
     }
 
+    public String getHostname() {
+        return hostname;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public XmlRpcClient getClient() {
+        return client;
+    }
+
+    public XmlRpcClientConfigImpl getCommon_config() {
+        return common_config;
+    }
+
+    public XmlRpcClient getModels() {
+        return models;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
     public List<Object> search(String model, List<Object> domain, HashMap<Object, Object> condition) {
         try {
             return Arrays.asList((Object[]) this.models.execute("execute_kw", Arrays.asList(

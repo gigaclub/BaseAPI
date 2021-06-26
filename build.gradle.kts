@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "net.gigaclub"
-version = "14.0.1.0.1"
+version = "14.0.1.0.2"
 
 val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()
@@ -17,7 +17,7 @@ val myLicense = "MIT"
 val myLicenseUrl = "https://opensource.org/licenses/MIT"
 
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_16
 }
 
 repositories {

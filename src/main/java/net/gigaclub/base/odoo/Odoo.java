@@ -85,7 +85,7 @@ public class Odoo {
         return uid;
     }
 
-    public List<Object> search(String model, List<Object> domain, HashMap<Object, Object> condition) {
+    public List<Object> search(String model, List<Object> domain, Map<Object, Object> condition) {
         try {
             return Arrays.asList((Object[]) this.models.execute("execute_kw", Arrays.asList(
                     this.database, this.uid, this.password,
@@ -121,7 +121,7 @@ public class Odoo {
         return 0;
     }
 
-    public List<Object> read(String model, List<Integer> ids, HashMap<Object, Object> fields) {
+    public List<Object> read(String model, List<Integer> ids, Map<Object, Object> fields) {
         try {
             return Arrays.asList(
                 (Object[])this.models.execute("execute_kw", Arrays.asList(
@@ -149,7 +149,7 @@ public class Odoo {
         return new ArrayList<>();
     }
 
-    public Map<String, Map<String, Object>> fields_get(String model, List<Object> domain, HashMap<Object, Object> condition) {
+    public Map<String, Map<String, Object>> fields_get(String model, List<Object> domain, Map<Object, Object> condition) {
         try {
             return (Map<String, Map<String, Object>>) this.models.execute("execute_kw", Arrays.asList(
                     this.database, this.uid, this.password,
@@ -161,7 +161,7 @@ public class Odoo {
         return new HashMap<String, Map<String, Object>>();
     }
 
-    public List<Object> search_read(String model, List<Object> domain, HashMap<Object, Object> condition) {
+    public List<Object> search_read(String model, List<Object> domain, Map<Object, Object> condition) {
         try {
             return Arrays.asList((Object[]) this.models.execute("execute_kw", Arrays.asList(
                     this.database, this.uid, this.password,
@@ -208,7 +208,7 @@ public class Odoo {
         return new ArrayList<>();
     }
 
-    public void unlink(String model, ArrayList<Object> domain) {
+    public void unlink(String model, List<Object> domain) {
         try {
             this.models.execute("execute_kw", Arrays.asList(
                     this.database, this.uid, this.password,

@@ -16,8 +16,8 @@ val myGithubIssueTrackerUrl = "https://github.com/${myGithubUsername}/${myArtifa
 val myLicense = "MIT"
 val myLicenseUrl = "https://opensource.org/licenses/MIT"
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_16
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 repositories {
@@ -26,6 +26,7 @@ repositories {
 
 dependencies {
     api("org.apache.xmlrpc:xmlrpc-client:3.1.3")
+    api("org.json:json:20180813")
 }
 
 val sourcesJar by tasks.creating(Jar::class) {

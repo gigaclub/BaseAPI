@@ -11,8 +11,8 @@ val myArtifactGroup: String = project.group.toString()
 val myArtifactVersion: String = project.version.toString()
 
 val myGithubUsername = "GigaClub"
-val myGithubHttpUrl = "https://github.com/${myGithubUsername}/${myArtifactId}"
-val myGithubIssueTrackerUrl = "https://github.com/${myGithubUsername}/${myArtifactId}/issues"
+val myGithubHttpUrl = "https://github.com/$myGithubUsername/$myArtifactId"
+val myGithubIssueTrackerUrl = "https://github.com/$myGithubUsername/$myArtifactId/issues"
 val myLicense = "MIT"
 val myLicenseUrl = "https://opensource.org/licenses/MIT"
 
@@ -41,7 +41,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/${myGithubUsername}/${myArtifactId}")
+            url = uri("https://maven.pkg.github.com/$myGithubUsername/$myArtifactId")
             credentials {
                 username = System.getenv("GITHUB_PACKAGES_USERID")
                 password = System.getenv("GITHUB_PACKAGES_PUBLISH_TOKEN")
@@ -86,4 +86,3 @@ publishing {
         }
     }
 }
-

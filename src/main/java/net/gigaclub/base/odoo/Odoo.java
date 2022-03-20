@@ -15,13 +15,37 @@ import org.json.JSONObject;
 /** Odoo is a Java client library for the Odoo ERP. */
 public class Odoo {
 
+  /**
+   * Hostname of the Odoo server.
+   */
   private final String hostname;
+  /**
+   * Database name of the Odoo server.
+   */
   private final String database;
+  /**
+   * Username of the Odoo server.
+   */
   private final String username;
+  /**
+   * Password of the Odoo server.
+   */
   private final String password;
+  /**
+   * Client for the XML-RPC communication.
+   */
   private final XmlRpcClient client;
+  /**
+   * Common configuration for the XML-RPC communication.
+   */
   private final XmlRpcClientConfigImpl commonConfig;
+  /**
+   * Models configuration for the XML-RPC communication.
+   */
   private XmlRpcClient models;
+  /**
+   * UID of the user.
+   */
   private int uid;
 
   /**

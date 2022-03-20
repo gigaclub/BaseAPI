@@ -8,16 +8,19 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class Odoo {
 
-    private String hostname;
-    private String database;
-    private String username;
-    private String password;
-    private XmlRpcClient client;
-    private XmlRpcClientConfigImpl common_config;
+    private final String hostname;
+    private final String database;
+    private final String username;
+    private final String password;
+    private final XmlRpcClient client;
+    private final XmlRpcClientConfigImpl common_config;
     private XmlRpcClient models;
     private int uid;
 
@@ -43,11 +46,17 @@ public class Odoo {
             array.add(this.password);
             array.add(new ArrayList<Object>());
             this.uid = (int) client.execute(this.common_config, "authenticate", array);
-            this.models = new XmlRpcClient() {{
-                setConfig(new XmlRpcClientConfigImpl() {{
-                    setServerURL(new URL(String.format("%s/xmlrpc/2/object", hostname)));
-                }});
-            }};
+            this.models =
+                    new XmlRpcClient() {
+                        {
+                            setConfig(
+                                    new XmlRpcClientConfigImpl() {
+                                        {
+                                            setServerURL(new URL(String.format("%s/xmlrpc/2/object", hostname)));
+                                        }
+                                    });
+                        }
+                    };
         } catch (XmlRpcException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
@@ -89,10 +98,12 @@ public class Odoo {
 
     public List<Object> search(String model, List<Object> domain, Map<Object, Object> condition) {
         try {
-            return Arrays.asList((Object[]) this.models.execute("execute_kw", Arrays.asList(
-                    this.database, this.uid, this.password,
-                    model, "search", domain, condition
-            )));
+            return Arrays.asList(
+                    (Object[])
+                            this.models.execute(
+                                    "execute_kw",
+                                    Arrays.asList(
+                                            this.database, this.uid, this.password, model, "search", domain, condition)));
         } catch (XmlRpcException e) {
             e.printStackTrace();
         }
@@ -101,10 +112,11 @@ public class Odoo {
 
     public List<Object> search(String model, List<Object> domain) {
         try {
-            return Arrays.asList((Object[]) this.models.execute("execute_kw", Arrays.asList(
-                    this.database, this.uid, this.password,
-                    model, "search", domain
-            )));
+            return Arrays.asList(
+                    (Object[])
+                            this.models.execute(
+                                    "execute_kw",
+                                    Arrays.asList(this.database, this.uid, this.password, model, "search", domain)));
         } catch (XmlRpcException e) {
             e.printStackTrace();
         }
@@ -113,11 +125,11 @@ public class Odoo {
 
     public int search_count(String model, List<Object> domain) {
         try {
-            return (int) this.models.execute("execute_kw", Arrays.asList(
-                this.database, this.uid, this.password,
-                model, "search_count", domain
-            ));
-        } catch(XmlRpcException e) {
+            return (int)
+                    this.models.execute(
+                            "execute_kw",
+                            Arrays.asList(this.database, this.uid, this.password, model, "search_count", domain));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
         return 0;
@@ -125,13 +137,14 @@ public class Odoo {
 
     public JSONArray read(String model, List<Integer> ids, Map<Object, Object> fields) {
         try {
-            return new JSONArray(Arrays.asList(
-                (Object[])this.models.execute("execute_kw", Arrays.asList(
-                        this.database, this.uid, this.password,
-                        model, "read", ids, fields
-                ))
-            ));
-        } catch(XmlRpcException e) {
+            return new JSONArray(
+                    Arrays.asList(
+                            (Object[])
+                                    this.models.execute(
+                                            "execute_kw",
+                                            Arrays.asList(
+                                                    this.database, this.uid, this.password, model, "read", ids, fields))));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
         return new JSONArray();
@@ -139,13 +152,19 @@ public class Odoo {
 
     public JSONArray read(String model, List<Integer> ids) {
         try {
-            return new JSONArray(Arrays.asList(
-                    (Object[])this.models.execute("execute_kw", Arrays.asList(
-                            this.database, this.uid, this.password,
-                            model, "read", Arrays.asList(ids)
-                    )))
-            );
-        } catch(XmlRpcException e) {
+            return new JSONArray(
+                    Arrays.asList(
+                            (Object[])
+                                    this.models.execute(
+                                            "execute_kw",
+                                            Arrays.asList(
+                                                    this.database,
+                                                    this.uid,
+                                                    this.password,
+                                                    model,
+                                                    "read",
+                                                    Arrays.asList(ids)))));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
         return new JSONArray();
@@ -153,11 +172,19 @@ public class Odoo {
 
     public JSONObject fields_get(String model, List<Object> domain, Map<Object, Object> condition) {
         try {
-            return new JSONObject((Map<String, Map<String, Object>>) this.models.execute("execute_kw", Arrays.asList(
-                    this.database, this.uid, this.password,
-                    model, "fields_get", domain, condition
-            )));
-        } catch(XmlRpcException e) {
+            return new JSONObject(
+                    (Map<String, Map<String, Object>>)
+                            this.models.execute(
+                                    "execute_kw",
+                                    Arrays.asList(
+                                            this.database,
+                                            this.uid,
+                                            this.password,
+                                            model,
+                                            "fields_get",
+                                            domain,
+                                            condition)));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
         return new JSONObject();
@@ -165,11 +192,20 @@ public class Odoo {
 
     public JSONArray search_read(String model, List<Object> domain, Map<Object, Object> condition) {
         try {
-            return new JSONArray(Arrays.asList((Object[]) this.models.execute("execute_kw", Arrays.asList(
-                    this.database, this.uid, this.password,
-                    model, "search_read", domain, condition
-            ))));
-        } catch(XmlRpcException e) {
+            return new JSONArray(
+                    Arrays.asList(
+                            (Object[])
+                                    this.models.execute(
+                                            "execute_kw",
+                                            Arrays.asList(
+                                                    this.database,
+                                                    this.uid,
+                                                    this.password,
+                                                    model,
+                                                    "search_read",
+                                                    domain,
+                                                    condition))));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
         return new JSONArray();
@@ -177,11 +213,11 @@ public class Odoo {
 
     public int create(String model, List<Object> parameters) {
         try {
-            return (int) this.models.execute("execute_kw", Arrays.asList(
-                    this.database, this.uid, this.password,
-                    model, "create", parameters
-            ));
-        } catch(XmlRpcException e) {
+            return (int)
+                    this.models.execute(
+                            "execute_kw",
+                            Arrays.asList(this.database, this.uid, this.password, model, "create", parameters));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
         return 0;
@@ -189,22 +225,29 @@ public class Odoo {
 
     public void write(String model, List<Object> parameters) {
         try {
-            this.models.execute("execute_kw", Arrays.asList(
-                    this.database, this.uid, this.password,
-                    model, "write", parameters
-            ));
-        } catch(XmlRpcException e) {
+            this.models.execute(
+                    "execute_kw",
+                    Arrays.asList(this.database, this.uid, this.password, model, "write", parameters));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
     }
 
     public JSONArray name_get(String model, List<Integer> ids) {
         try {
-            return new JSONArray(Arrays.asList((Object[]) this.models.execute("execute_kw", Arrays.asList(
-                    this.database, this.uid, this.password,
-                    model, "name_get", Arrays.asList(ids)
-            ))));
-        } catch(XmlRpcException e) {
+            return new JSONArray(
+                    Arrays.asList(
+                            (Object[])
+                                    this.models.execute(
+                                            "execute_kw",
+                                            Arrays.asList(
+                                                    this.database,
+                                                    this.uid,
+                                                    this.password,
+                                                    model,
+                                                    "name_get",
+                                                    Arrays.asList(ids)))));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
         return new JSONArray();
@@ -212,13 +255,11 @@ public class Odoo {
 
     public void unlink(String model, List<Object> domain) {
         try {
-            this.models.execute("execute_kw", Arrays.asList(
-                    this.database, this.uid, this.password,
-                    model, "unlink", domain
-            ));
-        } catch(XmlRpcException e) {
+            this.models.execute(
+                    "execute_kw",
+                    Arrays.asList(this.database, this.uid, this.password, model, "unlink", domain));
+        } catch (XmlRpcException e) {
             e.printStackTrace();
         }
     }
-
 }

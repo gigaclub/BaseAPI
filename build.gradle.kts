@@ -10,6 +10,9 @@ val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()
 val myArtifactVersion: String = project.version.toString()
 
+val GITHUB_PACKAGES_USERID: String by project
+val GITHUB_PACKAGES_PUBLISH_TOKEN: String by project
+
 val myGithubUsername = "GigaClub"
 val myGithubHttpUrl = "https://github.com/$myGithubUsername/$myArtifactId"
 val myGithubIssueTrackerUrl = "https://github.com/$myGithubUsername/$myArtifactId/issues"
@@ -43,8 +46,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/$myGithubUsername/$myArtifactId")
             credentials {
-                username = System.getenv("GITHUB_PACKAGES_USERID")
-                password = System.getenv("GITHUB_PACKAGES_PUBLISH_TOKEN")
+                username = GITHUB_PACKAGES_USERID
+                password = GITHUB_PACKAGES_PUBLISH_TOKEN
             }
         }
     }

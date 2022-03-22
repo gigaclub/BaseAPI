@@ -3,8 +3,6 @@ name: Java CI with Gradle
 on:
   push:
     branches: ["14.0"]
-  pull_request:
-    branches: ["14.0"]
 
 jobs:
   build:
@@ -15,6 +13,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
+          distribution: 'temurin'
           java-version: "17"
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew

@@ -4,20 +4,20 @@ plugins {
 }
 
 group = "net.gigaclub"
-version = "14.0.1.0.2"
+version = "14.0.1.0.3"
 
 val myArtifactId: String = rootProject.name
 val myArtifactGroup: String = project.group.toString()
 val myArtifactVersion: String = project.version.toString()
 
 val myGithubUsername = "GigaClub"
-val myGithubHttpUrl = "https://github.com/${myGithubUsername}/${myArtifactId}"
-val myGithubIssueTrackerUrl = "https://github.com/${myGithubUsername}/${myArtifactId}/issues"
+val myGithubHttpUrl = "https://github.com/$myGithubUsername/$myArtifactId"
+val myGithubIssueTrackerUrl = "https://github.com/$myGithubUsername/$myArtifactId/issues"
 val myLicense = "MIT"
 val myLicenseUrl = "https://opensource.org/licenses/MIT"
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_16
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 repositories {
@@ -26,6 +26,7 @@ repositories {
 
 dependencies {
     api("org.apache.xmlrpc:xmlrpc-client:3.1.3")
+    api("org.json:json:20180813")
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
@@ -40,7 +41,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/${myGithubUsername}/${myArtifactId}")
+            url = uri("https://maven.pkg.github.com/$myGithubUsername/$myArtifactId")
             credentials {
                 username = System.getenv("GITHUB_PACKAGES_USERID")
                 password = System.getenv("GITHUB_PACKAGES_PUBLISH_TOKEN")
@@ -85,4 +86,3 @@ publishing {
         }
     }
 }
-
